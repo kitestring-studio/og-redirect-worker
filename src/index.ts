@@ -27,7 +27,9 @@ export default {
 		if (userAgent.includes('facebookexternalhit')) {
 			// get the current request url and change build.domain.com to www.domain.com
 			const currentUrl = new URL(request.url);
+			console.log("currentUrl",currentUrl)
 			const newUrl = currentUrl.hostname.replace('build', 'www');
+			console.log("newUrl",newUrl);
 
 			// get the html from the newUrl
 			const response = await fetch(newUrl);
