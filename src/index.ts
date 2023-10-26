@@ -38,14 +38,15 @@ export default {
 			const html = await response.text();
 
 			// extract the og:title and og:image from the html
-			const ogTitle = html.match(/<meta property="og:title" content="(.*)" \/>/);
-			// const ogImage = html.match(/<meta property="og:image" content="(.*)" \/>/);
-			console.log(ogTitle/*, ogImage*/);
+			const regex = /<meta\s+(?:property=(['"])og:title\1\s+content=(['"])(.*?)\2|content=(['"])(.*?)\4\s+property=(['"])og:title\6)\s*\/?>/i;
+
+			const ogTitle = html.match(regex);
+			console.log(ogTitle);
 
 			let body = `<html>
 				<head>
 					<meta property="og:url" content="${currentUrl}" />
-					${ogTitle}
+					<meta property="og:title" content="${ogTitle}" />
 				</head>
 				<body></body>
 			</html>`;
