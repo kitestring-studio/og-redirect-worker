@@ -28,7 +28,9 @@ export default {
 			// get the current request url and change build.domain.com to www.domain.com
 			const currentUrl = new URL(request.url);
 			console.log("currentUrl",currentUrl)
-			const newUrl = currentUrl.hostname.replace('build', 'www');
+
+			const newUrl = new URL(currentUrl);
+			newUrl.hostname = newUrl.hostname.replace('build', 'www'); // Replace the hostname
 			console.log("newUrl",newUrl);
 
 			// get the html from the newUrl
@@ -40,15 +42,17 @@ export default {
 			const ogImage = html.match(/<meta property="og:image" content="(.*)" \/>/);
 			console.log(ogTitle, ogImage);
 
+			let body = `<html>
+				<head>
+					<meta property="og:url" content="${currentUrl}" />
+					<meta property="og:title" content="${ogTitle}" />
+					<meta property="og:image" content="${ogImage}" />
+				</head>
+				<body></body>
+			</html>`;
+			console.log(body)
 			return new Response(
-				`<html>
-					<head>
-						<meta property="og:url" content="${currentUrl}" />
-						<meta property="og:title" content="${ogTitle}" />
-						<meta property="og:image" content="${ogImage}" />
-					</head>
-					<body></body>
-				</html>`,
+				body,
 				{ headers: { 'Content-Type': 'text/html' } }
 			);
 		}
