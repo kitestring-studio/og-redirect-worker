@@ -35,6 +35,13 @@ export default {
 
 			// get the html from the newUrl
 			const response = await fetch(newUrl);
+			// if response type is not html, return the response
+			if (!response.headers.get('content-type')?.includes('text/html')) {
+				console.log("returning non-html response",response)
+				return response;
+			}
+
+
 			const html = await response.text();
 
 			// extract the og:title and og:image from the html
