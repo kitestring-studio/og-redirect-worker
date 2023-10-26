@@ -39,14 +39,13 @@ export default {
 
 			// extract the og:title and og:image from the html
 			const ogTitle = html.match(/<meta property="og:title" content="(.*)" \/>/);
-			const ogImage = html.match(/<meta property="og:image" content="(.*)" \/>/);
-			console.log(ogTitle, ogImage);
+			// const ogImage = html.match(/<meta property="og:image" content="(.*)" \/>/);
+			console.log(ogTitle/*, ogImage*/);
 
 			let body = `<html>
 				<head>
 					<meta property="og:url" content="${currentUrl}" />
-					<meta property="og:title" content="${ogTitle}" />
-					<meta property="og:image" content="${ogImage}" />
+					${ogTitle}
 				</head>
 				<body></body>
 			</html>`;
